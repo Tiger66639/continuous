@@ -1,0 +1,25 @@
+<%= form_for(@dashboard) do |f| %>
+  <% if @dashboard.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dashboard.errors.count, "error") %> prohibited this dashboard from being saved:</h2>
+
+      <ul>
+      <% @dashboard.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+    <div class="field">
+    <%= f.label :checks %><br>
+    <%= select_tag("dashboard[check_ids]", options_for_select(@checks.all.collect {|t| [t.name, t.id]}, @dashboard.check_ids), {:multiple => true, :prompt => 'Select Checks', :class => "form-control" } ) %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

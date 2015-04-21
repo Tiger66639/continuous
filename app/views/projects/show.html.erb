@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @project.name %>
+</p>
+<p>
+<strong>Clone URL</strong><br>
+git clone ssh://<%= @current_user.username %>@<%= @project.cistack.name %>.<%= #{Continuous::Application.config.cistackdomain} %>:29418/<%= @project.name %><br>
+</p>
+<p>
+<strong>Git Review File</strong>
+Remember to add your .gitreview file to your project:</br>
+<textarea cols="60" rows="10" disabled>
+[gerrit]
+host=<%= @project.cistack.name %>.<%= #{Continuous::Application.config.cistackdomain} %>
+port=29418
+project=<%= @project.name %>
+defaultbranch=master
+</textarea>
+</p>
+
+<p>
+<strong>Continuous Configuration File</strong><br>
+Remember to add your .continuous.yaml file to your project:</br>
+<textarea cols="60" rows="20" disabled>
+language: bash
+review_script:
+  - echo Executed at review
+approval_script:
+  - echo Executed after gerrit approval
+build_script:
+  - echo Executed after gerrit merge
+release_script:
+  - echo Executed after adding a tag
+periodic_script:
+  - echo Executed once a day
+</textarea>
+</p>
+
+
+<%= link_to 'Back', projects_path %>

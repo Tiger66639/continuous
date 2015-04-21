@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @dashboard.name %>
+</p>
+
+<p>
+  <strong>URL:</strong>
+  <a href="http://<%= #{Continuous::Application.config.dashboardserver} %>/<%= @dashboard.name %>">http://<%= #{Continuous::Application.config.dashboardserver} %>/<%= @dashboard.name %></a>
+</p>
+
+<p>
+  <strong>Checks:</strong><br>
+  <% @dashboard.checks.each do |c| %>
+    <%= @dashboard.name %>-<%= c.name %><br>
+  <% end %>
+</p>
+
+<p>
+  <strong>API Token:</strong>
+  b1f038805dba7c608b49ff01dabb2cca
+</p>
+
+<p>
+  <strong>Example:</strong><br>
+  <% @dashboard.checks.each do |c| %>
+    <% if c.checktype == "Status" %>
+    curl -d '{"auth_token":"b1f038805dba7c608b49ff01dabb2cca", "result":1}' -XPOST http://<%= #{Continuous::Application.config.dashboardserver} %>/widgets/<%= @dashboard.name %>-<%= c.name %><br>
+    <% elsif c.checktype == "Number" %>
+    curl -d '{"auth_token":"b1f038805dba7c608b49ff01dabb2cca", "current":40}' -XPOST http://<%= #{Continuous::Application.config.dashboardserver} %>/widgets/<%= @dashboard.name %>-<%= c.name %><br>
+    <% elsif c.checktype == "Meter" %>
+    curl -d '{"auth_token":"b1f038805dba7c608b49ff01dabb2cca", "value":30, "min":0, "max":100}' -XPOST http://<%= #{Continuous::Application.config.dashboardserver} %>/widgets/<%= @dashboard.name %>-<%= c.name %><br>
+    <% elsif c.checktype == "Graph" %>
+    curl -d '{"auth_token":"b1f038805dba7c608b49ff01dabb2cca", "points":[{"x":1980,"y":123},{"x":1981,"y":321},{"x":1982,"y":333}] }' -XPOST http://<%= #{Continuous::Application.config.dashboardserver} %>/widgets/<%= @dashboard.name %>-<%= c.name %><br>
+    <% elsif c.checktype == "Text" %>
+    curl -d '{"auth_token":"b1f038805dba7c608b49ff01dabb2cca", "text":"this is awesome"}' -XPOST http://<%= #{Continuous::Application.config.dashboardserver} %>/widgets/<%= @dashboard.name %>-<%= c.name %><br>
+    <% elsif c.checktype == "List" %>
+    curl -d '{"auth_token":"b1f038805dba7c608b49ff01dabb2cca", "items":[{"label":"thing1", "value":1},{"label":"thing2", "value":2},{"label":"thing3", "value":"three"}]}' -XPOST http://<%= #{Continuous::Application.config.dashboardserver} %>/widgets/<%= @dashboard.name %>-<%= c.name %><br>
+    <% end %>
+  <% end %>
+</p>
+<%= link_to 'Back', dashboards_path %>

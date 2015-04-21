@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+
+<h1> Account Details </h1>
+
+<table class="table table-striped table-hover">
+<tr><td><strong>Uuid:</strong></td><td><%= @account.uuid %></td></tr>
+<tr><td><strong>Name:</strong></td><td><%= @account.name %></td></tr>
+<tr><td><strong>Users:</strong></td><td>
+  <% @account.users.each do |u| %>
+    <%= u.name %> <%= link_to 'Remove', "/home/account/deleteuser/#{u.id}", method: :delete, data: { confirm: 'Are you sure?' } %><br>
+  <% end %>
+</td></tr>
+</table>
+
+<%= form_tag('/home/account/adduser') do %>
+  <%= label_tag 'user', 'Add User' %>
+  <%= select_tag "user_id", options_from_collection_for_select(@users, "id", "name") %>
+  <%= submit_tag "Add" %>
+<% end %>
+

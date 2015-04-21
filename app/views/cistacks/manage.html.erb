@@ -1,0 +1,5 @@
+<h1>Add a new approver to your CI Stack</h1><br>
+<%= form_tag("/cistacks/#{@cistack.id}/manage") do %>
+<%= select_tag("userid", options_for_select(@users.all.collect {|t| [t.name, t.id]}), {:multiple => false, :prompt => 'Select new Approver', :class => "form-control" } ) %>
+<%= submit_tag 'Add' %>
+<% end %>

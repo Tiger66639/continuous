@@ -1,0 +1,175 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Create
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+<%= form_for(@task, html: {role: "form"}) do |f| %>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create New Workflow Task </h4>
+      </div>
+      <div class="modal-body">
+
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+      <% @task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label 'Name (required)' %><br>
+    <%= f.text_field :name, :class => "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label 'Description (required)' %><br>
+    <%= f.text_area :description, :class => "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label 'Variables (comma separated list of variable names' %><br>
+    <%= f.text_area :varinput, :class => "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label 'Task type (required)' %><br>
+    <%= select_tag("task[tasktype]", options_for_select([['ssh','ssh'],['http','http'],['smtp','smtp']],@task.tasktype), {:multiple => false, :prompt => "Select type of task", :class => "form-control"} ) %>
+  </div>
+  <div id="task_form_http" style="display:none">
+  <h3>HTTP Call</h3>
+    <div class="form-group">
+      <%= label_tag "Url" %><br>
+      <%= text_field_tag 'task[http_url]', nil, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag "Method" %><br>
+      <%= text_field_tag 'task[http_method]', nil, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag "Params" %><br>
+      <%= text_field_tag 'task[http_params]', nil, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag "Body" %><br>
+      <%= text_area_tag 'task[http_body]', nil, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag "Headers" %><br>
+      <%= text_field_tag 'task[http_headers]', nil, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag "Cookies" %><br>
+      <%= text_field_tag 'task[http_cookies]', nil, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag "Auth" %><br>
+      <%= text_field_tag 'task[http_auth]', nil, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag "Timeout" %><br>
+      <%= text_field_tag 'task[http_timeout]', nil, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag "Allow Redirects" %><br>
+      <%= text_field_tag 'task[http_allow_redirects]', nil, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag "Proxies" %><br>
+      <%= text_field_tag 'task[http_proxies]', nil, :class => "form-control" %>
+    </div>
+  </div>
+  <div id="task_form_smtp" style="display:none">
+    <h3>Parameters</h3>
+      <div class="form-group">
+        <%= label_tag "To" %><br>
+        <%= text_field_tag 'task[smtp_to]', nil, :class => "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= label_tag "Subject" %><br>
+        <%= text_field_tag 'task[smtp_subject]', nil, :class => "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= label_tag "Body" %><br>
+        <%= text_field_tag 'task[smtp_body]', nil, :class => "form-control" %>
+      </div>
+    <h3>Settings</h3><br>
+      <div class="form-group">
+       <%= label_tag "From" %><br>
+       <%= text_field_tag 'task[smtp_from]', nil, :class => "form-control" %>
+     </div>
+    <div class="form-group">
+       <%= label_tag "SMTP Server" %><br>
+       <%= text_field_tag 'task[smtp_server]', nil, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+       <%= label_tag "Password" %><br>
+       <%= text_field_tag '[smtp_password]', nil, :class => "form-control" %>
+    </div>
+  </div>
+  <div id="task_form_ssh" style="display:none">
+    <h3>Ssh</h3>
+    <div class="form-group">
+      <%= label_tag :cmd %><br>
+      <%= text_area_tag 'task[ssh_cmd]', nil, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :host %><br>
+      <%= text_field_tag 'task[ssh_host]', nil, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :username %><br>
+      <%= text_field_tag 'task[ssh_username]', nil, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :password %><br>
+      <%= password_field_tag 'task[ssh_password]', nil, :class => "form-control" %>
+    </div>
+  </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= f.submit 'Create', :class => "btn btn-primary" %>
+      </div>
+    </div>
+      <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+jQuery(function($) {
+  return $('select#task_tasktype').change(function() {
+    var tasktype;
+    tasktype = $('select#task_tasktype :selected').val();
+    switch (tasktype) {
+      case 'ssh':
+        $('div#task_form_http').hide();
+        $('div#task_form_ssh').show();
+        $('div#task_form_smtp').hide();
+        break;
+      case 'http':
+        $('div#task_form_http').show();
+        $('div#task_form_ssh').hide();
+        $('div#task_form_smtp').hide();
+        break;
+      case 'smtp':
+        $('div#task_form_http').hide();
+        $('div#task_form_ssh').hide();
+        $('div#task_form_smtp').show();
+        break;
+      default:
+        $('div#task_form_http').hide();
+        $('div#task_form_ssh').hide();
+        $('div#task_form_smtp').hide();
+        break;
+    }
+  });
+});
+</script>

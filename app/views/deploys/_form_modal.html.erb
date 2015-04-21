@@ -1,0 +1,48 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Create
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+<%= form_for(@deploy,html: {role: "form"}) do |f| %>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Deploy a Workflow</h4>
+      </div>
+      <div class="modal-body">
+
+
+  <% if @deploy.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@deploy.errors.count, "error") %> prohibited this deploy from being saved:</h2>
+
+      <ul>
+      <% @deploy.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="form-group">
+    <%= f.label :workflow %><br>
+    <%= select_tag("deploy[workflow_id]", options_for_select(@workflows.all.collect {|t| [t.name, t.id]}, @deploy.workflow_id), {:multiple => false, :prompt => "Select workflow to deploy", :class => "form-control" } ) %>
+  </div>
+  <div id="deployinput">
+  </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= f.submit 'Deploy', :class => "btn btn-primary" %>
+      </div>
+    </div>
+      <% end %>
+  </div>
+</div>
+
+

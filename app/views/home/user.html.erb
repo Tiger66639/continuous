@@ -1,0 +1,14 @@
+<h1>User Details</h1>
+<p id="notice"><%= notice %></p>
+
+<table class="table table-striped table-hover">
+<tr><td><strong>Name:</strong></td><td><%= @user.name %></td></tr>
+<tr><td><strong>Email:</strong></td><td><%= @user.email %></td></tr>
+<tr><td><strong>Uuid:</strong></td><td><%= @user.uuid %></td></tr>
+<tr><td><strong>Roles:</strong></td><td>
+  <% @user.roles.each do |r| %>
+  <%= r.name %></br>
+  <% end %>
+</td></tr>
+</table>
+

@@ -1,0 +1,29 @@
+<h1>Listing ciworkers</h1>
+<div id="ciworkertablelist">
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Image</th>
+      <th>IP</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ciworkers.each do |ciworker| %>
+      <tr>
+        <td><%= ciworker.name %></td>
+        <td><%= ciworker.image %></td>
+        <td><% if not ciworker.privateip.nil? %><%= ciworker.privateip %><% end %></td>
+        <td><%= ciworker.status %></td>
+        <td><%= link_to 'Show', ciworker %></td>
+        <td><%= link_to 'Destroy', ciworker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<br>
+<%= render 'form_modal' %>

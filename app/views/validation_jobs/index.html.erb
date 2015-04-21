@@ -1,0 +1,28 @@
+<h1>Listing Jobs</h1>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Definition</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @validation_jobs.each do |validation_job| %>
+      <tr>
+        <td><%= validation_job.name %></td>
+        <td><%= validation_job.description %></td>
+        <td><%= validation_job.definition %></td>
+        <td><%= link_to 'Show', validation_job %></td>
+        <td><%= link_to 'Destroy', validation_job, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= render 'form_modal' %>

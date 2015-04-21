@@ -1,0 +1,33 @@
+<%= form_for(@ciworker) do |f| %>
+  <% if @ciworker.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ciworker.errors.count, "error") %> prohibited this ciworker from being saved:</h2>
+
+      <ul>
+      <% @ciworker.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :image %><br>
+    <%= f.text_field :image %>
+  </div>
+  <div class="field">
+    <%= f.label :flavor %><br>
+    <%= f.text_field :flavor %>
+  </div>
+  <div class="field">
+    <%= f.label :cistacks %><br>
+    <%= select_tag("ciworker[cistack_id]", options_for_select(@cistacks.all.collect {|t| [t.name, t.id]}, @ciworker.cistack_id), {:multiple => false, :prompt => 'Select CiStack', :class => "form-control" } ) %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

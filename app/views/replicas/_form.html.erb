@@ -1,0 +1,30 @@
+<%= form_for(@replica) do |f| %>
+  <% if @replica.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@replica.errors.count, "error") %> prohibited this replica from being saved:</h2>
+
+      <ul>
+      <% @replica.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :destination %><br>
+    <%= f.text_field :destination %>
+  </div>
+  <div class="field">
+    <%= f.label :project %><br>
+    <%= select_tag("replica[project_id]", options_for_select(@projects.all.collect {|t| [t.name, t.id]}, @replica.project_id), {:multiple => false, :prompt => 'Select Project', :class => "form-control" } ) %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

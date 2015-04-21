@@ -1,0 +1,49 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Create
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+<%= form_for(@check, html: {role: "form"}) do |f| %>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create New Validation Check</h4>
+      </div>
+      <div class="modal-body">
+
+  <% if @check.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@check.errors.count, "error") %> prohibited this check from being saved:</h2>
+
+      <ul>
+      <% @check.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, :class => 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :check_type %><br>
+    <%= select_tag("check[checktype]", options_for_select([['Number','Number'],['List','List'],['Text','Text'],['Meter','Meter'],['Status','Status'],['Graph','Graph']],@check.checktype), {:multiple => false, :class => "form-control"} ) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :information %><br>
+    <%= f.text_area :information, :class => 'form-control' %>
+  </div>
+</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= f.submit 'Create', :class => "btn btn-primary" %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

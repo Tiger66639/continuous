@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @role.name %>
+  <strong>Permissions:</strong><br>
+  <% @role.permissionroles.each do |p| %>
+    <%= p.permission.name %> <br>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_role_path(@role) %> |
+<%= link_to 'Back', roles_path %>

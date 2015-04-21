@@ -1,0 +1,6 @@
+<% if not deployinputs.nil? %>
+<% deployinputs.each do |s| %>
+    <%= label_tag "#{s}" %>
+    <%= text_field_tag "deploy[deployinput][#{s}]", nil, class: "form-control" %>
+<% end %>
+<% end %>

@@ -1,0 +1,11 @@
+<%= @tform.to_s %>
+<%= "WTF1" %>
+<% if @tform == "http" %>
+  <h3>HTTP API Call</h3>
+<% elsif @tform == "smtp" %>
+  <h3>Send an Email</h3>
+<% elsif @tform == "ssh" %>
+  <h3>Execute a Command</h3>
+<% else %>
+WTF
+<% end %>

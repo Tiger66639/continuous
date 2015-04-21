@@ -1,0 +1,73 @@
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
+  <%= javascript_include_tag "cytoscape.min" %>
+  <style>
+  #cy {
+    height: 100%;
+    width: 100%;
+  }
+  </style>
+  <script type="text/javascript">
+$(function(){
+$('#cy').cytoscape({
+  style: cytoscape.stylesheet()
+    .selector('node')
+      .css({
+        'content': 'data(name)',
+        'text-valign': 'center',
+        'color': 'white',
+        'text-outline-width': 1,
+        'text-outline-color': '#888'
+      })
+    .selector('edge')
+      .css({
+        'target-arrow-shape': 'triangle',
+        'line-color': 'data(faveColor)',
+        'target-arrow-color': 'data(faveColor)'
+      })    
+    .selector(':selected')
+      .css({
+        'background-color': 'black',
+        'line-color': 'black',
+        'target-arrow-color': 'black',
+        'source-arrow-color': 'black'
+      }),
+  elements: {
+    nodes: [
+    <% @workflow.steps.each do |s| %>
+     { data: { id: '<%= s.name %>', name: '<%= s.name %>' } },
+    <% end %>
+     { data: { id: 'fail', name: 'fail' } },
+     { data: { id: 'succeed', name: 'succeed' } }
+    ],
+    edges: [
+    <% @workflow.steps.each do |s| %>
+      <% if not s.onsuccess.nil? %>
+        <% s.onsuccess.split("\n").each do |st| %>
+        { data: { source: '<%= s.name %>', target: '<%= st %>', faveColor: 'green' } },
+        <% end %>
+      <% end %>
+      <% if not s.oncomplete.nil? %>
+        <% s.oncomplete.split("\n").each do  |st| %>
+        { data: { source: '<%= s.name %>', target: '<%= st %>', faveColor: 'blue' } },
+        <% end %>
+      <% end %>
+      <% if not s.onfail.nil? %>
+        <% s.onfail.split("\n").each do  |st| %>
+        { data: { source: '<%= s.name %>', target: '<%= st %>', faveColor: 'red' } },
+        <% end %>
+      <% end %>
+    <% end %>
+      { data: { source: 'succeed', target: 'succeed', faveColor: 'black' } }
+    ]
+  },
+  layout: {
+    name: 'grid',
+    padding: 10
+  }
+});
+});
+  </script>
+Diagram
+<div id="cy">
+</div>
+

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @replica.name %>
+</p>
+
+<p>
+  <strong>Destination:</strong>
+  <%= @replica.destination %>
+</p>
+
+<p><strong>SSH Key:</strong><br>
+<textarea cols="60" rows="10" disabled>
+ssh-dss AAAAB3NzaC1kc3MAAACBAJAnFyvIPVTdUOYbvbHILvw9JD+nClzeSteZ3ToURa4LIYPE7ujHQP07E1mI7iyO689Qg/+/xnxnnHL7G+NfJNvscOMjl2u6HWigorkfXhej32ecn7imQGHftEkDraMuhyQU2Q1iRB+2zyOQ1igwU65qNYtEfCgXsipKBaXKF2qhAAAAFQCjJs80sjBrGfCA5JlZ3jWeZ6/MrQAAAIA3PRxgsJNhpTQpal8HPLvlLi6f1m/yLjhSkudm59Sr+6stTYBvSNG9FSjmNKVxhh+xxRkSN15qT2axB1x1dkjLvaljA4fL810jjVGACvk2KiyxJiiJEIo7qePvoI+Mu+ftbJhTzulqeJs9Cm512cROrgBveuNFDDrEz+IFBkQh4wAAAIEAjpJsLuR/Vp0Il59pZOro3uNGfwKCVQPg+QmJ21mb8+7aX6R4XJUoPsUkcWjWp0Td3BAe8yKeyRfQSvKJAMDCuHrug4GgUPLO5tPGu/EhNq546fXruGoRwvD5xMzW4pw6Vn5720LgXY11xAEmMWWk3QF2JNhHf6JQf+0xT/AXJfw=
+</textarea>
+</p>
+
+<%= link_to 'Back', replicas_path %>

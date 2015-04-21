@@ -1,0 +1,42 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Create
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+<%= form_for(@environment, html: {role: "form"}) do |f| %>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create New Environment</h4>
+      </div>
+      <div class="modal-body">
+  <% if @environment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@environment.errors.count, "error") %> prohibited this environment from being saved:</h2>
+
+      <ul>
+      <% @environment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, :class => 'form-control' %>
+  </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= f.submit 'Create', :class => "btn btn-primary" %>
+      </div>
+    </div>
+      <% end %>
+  </div>
+</div>
+

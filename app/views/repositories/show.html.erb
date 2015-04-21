@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @repository.name %>
+</p>
+<p>
+  <strong>Type:</strong>
+  <%= @repository.repotype %>
+</p>
+<p>
+  <strong>URL:</strong>
+  <a href="http://<%= #{Continuous::Application.config.repositoryserver} %>/<%= @repository.name %>">http://<%= #{Continuous::Application.config.repositoryserver} %>/<%= @repository.name %></a>
+</p>
+<%= link_to 'Back', repositories_path %>

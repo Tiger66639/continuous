@@ -1,0 +1,78 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @workflow.name %>
+</p>
+<p>
+  <%= link_to "Click to see Diagram", "/workflows/#{@workflow.id}/diagram", :target => "_blank" %>
+</p>
+<p>
+  <strong>Steps:</strong></br>
+<div id="workflowtasks">
+  <% @workflow.steps.each do |s| %>
+    <div class="panel-group" id="accordion<%= s.id %><%= s.name %>" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="heading<%= s.id %><%= s.name %>">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion<%= s.id %><%= s.name %>" href="#collapse<%= s.id %><%= s.name %>" aria-expanded="true" aria-controls="collapse<%= s.id %><%= s.name %>">
+              <%= s.name %>
+            </a>
+            <span id="removestep" class="glyphicon glyphicon-remove clickable" data-step_id="<%= s.id %>" data-workflow_id="<%= @workflow.id %>"></span>
+            </h4>
+        </div>
+        <div id="collapse<%= s.id %><%= s.name %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%= s.id %><%= s.name %>">
+          <div class="panel-body">
+            <p>On Success <span id="hide" class="glyphicon glyphicon-eye-open" aria-hidden="true" data-on_step="<%= s.id %>_success"></span></p>
+            <div id="on_success_<%= s.id %>">
+                <% line = 0 %>
+              <% if not s.onsuccess.nil? 
+                 s.onsuccess.split("\n").each do |l| %>
+                <p><%= l %><span id="remove_on_success_step" class="glyphicon glyphicon-remove clickable" data-on-step="<%= l %>" data-id-step="<%= s.id %>" data-line-step="<%= line %>"></span></p><br>
+                <% line += 1 %>
+              <% end 
+                 end %>
+	    </div> 
+            Step: <%= select_tag("step_id", options_for_select(@workflow.steps.all.collect {|t| [t.name, t.id]} << ["fail", 999999999] << ["succeed",100000000], nil), {:multiple => false, :prompt => 'Select Step', :class => "form-control step-on selectable", :data => { onstep: "success", parentstep: s.id } } ) %>
+            <br>
+            <p>On Failure <span id="hide" class="glyphicon glyphicon-eye-open" aria-hidden="true" data-on_step="<%= s.id %>_failure"></span></p>
+            <div id="on_failure_<%= s.id %>">
+                <% line = 0 %>
+              <% if not s.onfail.nil?
+                 s.onfail.split("\n").each do |l| %>
+                <p><%= l %><span id="remove_on_failure_step" class="glyphicon glyphicon-remove clickable" data-on-step="<%= l %>" data-id-step="<%= s.id %>" data-line-step="<%= line %>"></span></p><br>
+                <% line += 1 %>
+              <% end
+                 end  %>
+            </div> 
+            Step: <%= select_tag("step_id", options_for_select(@workflow.steps.all.collect {|t| [t.name, t.id]} << ["fail", 999999999] << ["succeed",100000000], nil), {:multiple => false, :prompt => 'Select Step', :class => "form-control step-on selectable", :data => { onstep: "failure", parentstep: s.id } } ) %>
+            <br>
+            <p>On Completed <span id="hide" class="glyphicon glyphicon-eye-open" aria-hidden="true" data-on_step="<%= s.id %>_completed"></span></p>
+            <div id="on_completed_<%= s.id %>">
+                <% line = 0 %>
+              <% if not s.oncomplete.nil? 
+                 s.oncomplete.split("\n").each do |l| %>
+                <p><%= l %><span id="remove_on_completed_step" class="glyphicon glyphicon-remove clickable" data-on-step="<%= l %>" data-id-step="<%= s.id %>" data-line-step="<%= line %>"></span></p><br>
+                <% line += 1 %>
+              <% end 
+                 end %>
+            </div> 
+            Step: <%= select_tag("step_id", options_for_select(@workflow.steps.all.collect {|t| [t.name, t.id]} << ["fail", 999999999] << ["succeed",100000000], nil), {:multiple => false, :prompt => 'Select Step', :class => "form-control step-on selectable", :data => { onstep: "completed", parentstep: s.id } } ) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+</p>
+
+<p>
+  <strong>Add step:</strong>
+  <br>Name for step: <%= text_field_tag 'step[name]', nil, placeholder: 'Enter the name for this step' %>
+  <br>Task: <%= select_tag("workflow[task_id]", options_for_select(@task.all.collect {|t| [t.name, t.id]}, nil), {:multiple => false, :prompt => 'Select Task', :class => "form-control" } ) %>
+  <input type="hidden" id="workflow_id" value="<%= @workflow.id %>" />
+</p>
+
+<br>
+<%= button_to "Update Workflow", "/workflows/#{@workflow.id}/reload", remote: true, method: :put %>
+<%= link_to 'Back', workflows_path %>

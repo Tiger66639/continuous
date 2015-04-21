@@ -1,0 +1,26 @@
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Image</th>
+      <th>Status</th>
+      <th>IP Address</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ciworkers.each do |ciworker| %>
+      <tr>
+        <td><%= ciworker.name %></td>
+        <td><%= ciworker.image %></td>
+        <td><%= ciworker.status %></td>
+        <td><%= ciworker.privateip %></td>
+        <td><%= link_to 'Show', ciworker %></td>
+        <td><%= link_to 'Destroy', ciworker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
