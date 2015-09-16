@@ -22,6 +22,14 @@
     </vcs-settings>
     <requirements />
     <build-triggers />
+    <build-extensions>
+      <extension id="BUILD_EXT_18" type="VcsLabeling">
+        <parameters>
+          <param name="labelingPattern" value="build-%system.build.number%" />
+          <param name="vcsRootId" value="Continuous_HttpsGithubComTiger66639continuousRefsHeadsMaster" />
+        </parameters>
+      </extension>
+    </build-extensions>
     <cleanup />
   </settings>
 </build-type>
